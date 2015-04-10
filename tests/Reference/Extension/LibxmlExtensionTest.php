@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension libxml
  */
 class LibxmlExtensionTest extends GenericTest
 {
@@ -47,7 +48,7 @@ class LibxmlExtensionTest extends GenericTest
                 'LIBXML_HTML_NOIMPLIED',
             );
         }
-        self::$ext = 'Libxml';
+
         parent::setUpBeforeClass();
     }
 }

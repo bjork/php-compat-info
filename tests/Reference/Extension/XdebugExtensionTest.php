@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension xdebug
  */
 class XdebugExtensionTest extends GenericTest
 {
@@ -62,7 +63,6 @@ class XdebugExtensionTest extends GenericTest
             }
         }
 
-        self::$ext = 'Xdebug';
         parent::setUpBeforeClass();
     }
 }

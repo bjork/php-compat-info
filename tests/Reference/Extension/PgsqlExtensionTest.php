@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension pgsql
  */
 class PgsqlExtensionTest extends GenericTest
 {
@@ -45,7 +46,7 @@ class PgsqlExtensionTest extends GenericTest
             // Requires CONNECTION_SSL_STARTUP
             'PGSQL_CONNECTION_SSL_STARTUP',
         );
-        self::$ext = 'Pgsql';
+
         parent::setUpBeforeClass();
     }
 }

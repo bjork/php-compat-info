@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension http
  */
 class HttpExtensionTest extends GenericTest
 {
@@ -49,7 +50,7 @@ class HttpExtensionTest extends GenericTest
             // PHP_HTTP_CURL_VERSION(7,38,0)
             'http\\Client\\Curl\\AUTH_SPNEGO',
         );
-        self::$ext = 'Http';
+
         parent::setUpBeforeClass();
 
         if (!is_null(self::$obj)) {

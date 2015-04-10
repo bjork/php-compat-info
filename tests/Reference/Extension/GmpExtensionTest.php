@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension gmp
  */
 class GmpExtensionTest extends GenericTest
 {
@@ -48,7 +49,6 @@ class GmpExtensionTest extends GenericTest
             'GMP_MPIR_VERSION', // optional in source code
         );
 
-        self::$ext = 'Gmp';
         parent::setUpBeforeClass();
     }
 }

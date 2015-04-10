@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension mysqli
  */
 class MysqliExtensionTest extends GenericTest
 {
@@ -75,7 +76,7 @@ class MysqliExtensionTest extends GenericTest
             'mysqli_stmt_more_results',
             'mysqli_stmt_next_result',
         );
-        self::$ext = 'Mysqli';
+
         parent::setUpBeforeClass();
     }
 }

@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension odbc
  */
 class OdbcExtensionTest extends GenericTest
 {
@@ -67,7 +68,6 @@ class OdbcExtensionTest extends GenericTest
             array_push(self::$optionalconstants, 'SQL_WCHAR', 'SQL_WVARCHAR', 'SQL_WLONGVARCHAR');
         }
 
-        self::$ext = 'Odbc';
         parent::setUpBeforeClass();
     }
 }

@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension mcrypt
  */
 class McryptExtensionTest extends GenericTest
 {
@@ -79,7 +80,7 @@ class McryptExtensionTest extends GenericTest
         self::$ignoredconstants = array(
             'MCRYPT_BLOWFISH_COMPAT',
         );
-        self::$ext = 'Mcrypt';
+
         parent::setUpBeforeClass();
     }
 }

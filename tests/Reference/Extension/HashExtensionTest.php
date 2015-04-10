@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension hash
  */
 class HashExtensionTest extends GenericTest
 {
@@ -98,7 +99,7 @@ class HashExtensionTest extends GenericTest
                 self::$ignoredconstants = $mhashconstants;
             }
         }
-        self::$ext = 'Hash';
+
         parent::setUpBeforeClass();
     }
 }

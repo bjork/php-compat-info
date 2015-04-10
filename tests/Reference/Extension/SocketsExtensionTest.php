@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension sockets
  */
 class SocketsExtensionTest extends GenericTest
 {
@@ -208,7 +209,7 @@ class SocketsExtensionTest extends GenericTest
             // requires HAVE_SOCKETPAIR
             'socket_create_pair',
         );
-        self::$ext = 'Sockets';
+
         parent::setUpBeforeClass();
     }
 }

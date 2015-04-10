@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension imap
  */
 class ImapExtensionTest extends GenericTest
 {
@@ -45,7 +46,7 @@ class ImapExtensionTest extends GenericTest
             'imap_mutf7_to_utf8', // build option, HAVE_IMAP_MUTF7
             'imap_utf8_to_mutf7',
         );
-        self::$ext = 'Imap';
+
         parent::setUpBeforeClass();
     }
 }

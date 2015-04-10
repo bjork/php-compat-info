@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension xsl
  */
 class XslExtensionTest extends GenericTest
 {
@@ -56,7 +57,7 @@ class XslExtensionTest extends GenericTest
                 'XSL_SECPREF_WRITE_NETWORK',
             );
         }
-        self::$ext = 'Xsl';
+
         parent::setUpBeforeClass();
     }
 }

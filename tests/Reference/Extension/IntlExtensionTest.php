@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension intl
  */
 class IntlExtensionTest extends GenericTest
 {
@@ -66,7 +67,6 @@ class IntlExtensionTest extends GenericTest
             'intl.use_exceptions'
         );
 
-        self::$ext = 'Intl';
         parent::setUpBeforeClass();
     }
 }

@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension ssh2
  */
 class Ssh2ExtensionTest extends GenericTest
 {
@@ -63,7 +64,6 @@ class Ssh2ExtensionTest extends GenericTest
             'SSH2_POLL_LISTENER_CLOSED',
         );
 
-        self::$ext = 'Ssh2';
         parent::setUpBeforeClass();
     }
 }

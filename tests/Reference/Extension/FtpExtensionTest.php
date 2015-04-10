@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension ftp
  */
 class FtpExtensionTest extends GenericTest
 {
@@ -46,7 +47,6 @@ class FtpExtensionTest extends GenericTest
             'ftp_ssl_connect',
         );
 
-        self::$ext = 'Ftp';
         parent::setUpBeforeClass();
     }
 }

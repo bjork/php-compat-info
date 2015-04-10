@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension redis
  */
 class RedisExtensionTest extends GenericTest
 {
@@ -41,7 +42,10 @@ class RedisExtensionTest extends GenericTest
      */
     public static function setUpBeforeClass()
     {
-        self::$ext = 'Redis';
+        self::$optionalconstants = array(
+            'Redis::SERIALIZER_IGBINARY', // Build time option
+        );
+
         parent::setUpBeforeClass();
     }
 }

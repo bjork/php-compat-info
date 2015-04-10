@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension gd
  */
 class GdExtensionTest extends GenericTest
 {
@@ -65,7 +66,6 @@ class GdExtensionTest extends GenericTest
             self::$optionalfunctions[] = 'imageantialias';
         }
 
-        self::$ext = 'Gd';
         parent::setUpBeforeClass();
     }
 }

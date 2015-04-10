@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension openssl
  */
 class OpensslExtensionTest extends GenericTest
 {
@@ -51,7 +52,6 @@ class OpensslExtensionTest extends GenericTest
             'OPENSSL_KEYTYPE_EC',
         );
 
-        self::$ext = 'Openssl';
         parent::setUpBeforeClass();
     }
 }

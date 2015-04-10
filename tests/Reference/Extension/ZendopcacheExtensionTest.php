@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension zend opcache
  */
 class ZendopcacheExtensionTest extends GenericTest
 {
@@ -47,7 +48,7 @@ class ZendopcacheExtensionTest extends GenericTest
                 'opcache.mmap_base',
             );
         }
-        self::$ext = 'Zend OPcache';
+
         parent::setUpBeforeClass();
     }
 }

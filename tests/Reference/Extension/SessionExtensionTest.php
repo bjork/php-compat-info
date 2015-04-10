@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension session
  */
 class SessionExtensionTest extends GenericTest
 {
@@ -45,7 +46,7 @@ class SessionExtensionTest extends GenericTest
             // Only defined after session_start
             'SID',
         );
-        self::$ext = 'Session';
+
         parent::setUpBeforeClass();
     }
 }

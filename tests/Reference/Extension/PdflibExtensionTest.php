@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension pdflib
  */
 class PdflibExtensionTest extends GenericTest
 {
@@ -84,7 +85,7 @@ class PdflibExtensionTest extends GenericTest
             'pdf_utf8_to_utf32',
             'pdf_utf32_to_utf8',
         );
-        self::$ext = 'Pdflib';
+
         parent::setUpBeforeClass();
     }
 }

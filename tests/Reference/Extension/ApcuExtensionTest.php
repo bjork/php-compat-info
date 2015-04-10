@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension apcu
  */
 class ApcuExtensionTest extends GenericTest
 {
@@ -51,7 +52,6 @@ class ApcuExtensionTest extends GenericTest
                 ' apc_register_serializer-0',   // on PHP 5.6 branch
             );
         }
-        self::$ext = 'Apcu';
         parent::setUpBeforeClass();
     }
 }

@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension geoip
  */
 class GeoipExtensionTest extends GenericTest
 {
@@ -50,7 +51,7 @@ class GeoipExtensionTest extends GenericTest
             // requires GeoIP C library 1.4.8 or higher (LIBGEOIP_VERSION >= 1004008)
             'GEOIP_NETSPEED_EDITION_REV1',
         );
-        self::$ext = 'Geoip';
+
         parent::setUpBeforeClass();
     }
 }

@@ -31,6 +31,7 @@ use Bartlett\Tests\CompatInfo\Reference\GenericTest;
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://php5.laurent-laville.org/compatinfo/
+ * @requires   extension standard
  */
 class StandardExtensionTest extends GenericTest
 {
@@ -206,7 +207,7 @@ class StandardExtensionTest extends GenericTest
                 'STREAM_IPPROTO_RAW',
             );
         }
-        self::$ext = 'Standard';
+
         parent::setUpBeforeClass();
     }
 }
