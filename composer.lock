@@ -675,16 +675,16 @@
     "packages-dev": [
         {
             "name": "bartlett/phpunit-loggertestlistener",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/llaville/phpunit-LoggerTestListener.git",
-                "reference": "34dc4d06a0ff2b216b1f67ec4d23e04f85af4bd7"
+                "reference": "1b3f6d3ec4b2d60a7c2dbadd947feefb44b1b800"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/llaville/phpunit-LoggerTestListener/zipball/34dc4d06a0ff2b216b1f67ec4d23e04f85af4bd7",
-                "reference": "34dc4d06a0ff2b216b1f67ec4d23e04f85af4bd7",
+                "url": "https://api.github.com/repos/llaville/phpunit-LoggerTestListener/zipball/1b3f6d3ec4b2d60a7c2dbadd947feefb44b1b800",
+                "reference": "1b3f6d3ec4b2d60a7c2dbadd947feefb44b1b800",
                 "shasum": ""
             },
             "require": {
@@ -717,7 +717,7 @@
             ],
             "description": "PHPUnit Test Suite listener for compatible PSR-3 logger",
             "homepage": "https://github.com/llaville/phpunit-LoggerTestListener",
-            "time": "2015-04-07 10:26:55"
+            "time": "2015-04-13 18:37:12"
         },
         {
             "name": "bartlett/umlwriter",
