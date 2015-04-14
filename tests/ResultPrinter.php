@@ -61,6 +61,61 @@ class ResultPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_
         } else {
             $level = LogLevel::NOTICE;
         }
-        $this->setLogger(new \Psr3ConsoleLogger('PHPUnitPrinterLogger', $level));
+
+        $console = new \Psr3ConsoleLogger('PHPUnitPrinterLogger', $level);
+        $console->pushProcessor(
+            function (array $record) {
+                if (!array_key_exists('operation', $record['context'])) {
+                    return $record;
+                }
+                $context = $record['context'];
+
+                if ('startTestSuite' == $context['operation']) {
+                    $suiteName = $context['suiteName'];
+                    if (strpos($suiteName, 'ExtensionTest::') > 0) {
+                        list ($className, $methodName) = explode('::', $suiteName);
+                        $parts = explode('\\', $className);
+
+                        $suiteName = sprintf('%s::%s', end($parts), $methodName);
+
+                        $record['message'] = "TestSuite '$suiteName'";
+                    }
+
+                } elseif ('endTestSuite' == $context['operation']) {
+                    $suiteName = $context['suiteName'];
+                    if (strpos($suiteName, 'ExtensionTest::') > 0) {
+                        $resultMessage  = sprintf('    %s. ', ($context['errorCount'] + $context['failureCount'] ? 'KO' : 'OK'));
+                        $resultMessage .= "Tests: " . $context['testCount'] . ", ";
+                        $resultMessage .= "Assertions: " . $context['assertionCount'];
+
+                        if ($context['failureCount'] > 0) {
+                            $resultMessage .= ", Failures: " . $context['failureCount'];
+                        }
+
+                        if ($context['errorCount'] > 0) {
+                            $resultMessage .= ", Errors: " . $context['errorCount'];
+                        }
+
+                        if ($context['incompleteCount'] > 0) {
+                            $resultMessage .= ", Incompleted: " . $context['incompleteCount'];
+                        }
+
+                        if ($context['skipCount'] > 0) {
+                            $resultMessage .= ", Skipped: " . $context['skipCount'];
+                        }
+
+                        if ($context['riskyCount'] > 0) {
+                            $resultMessage .= ", Risky: " . $context['riskyCount'];
+                        }
+
+                        $record['message'] = $resultMessage;
+                    }
+                }
+
+                return $record;
+            }
+        );
+
+        $this->setLogger($console);
     }
 }
