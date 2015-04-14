@@ -4,52 +4,62 @@ $baseDir   = dirname(__DIR__);
 $vendorDir = $baseDir . '/vendor';
 
 $loader = require_once $vendorDir . '/autoload.php';
-$loader->addClassMap(
-    array(
-        'Bartlett\LoggerTestListener'
-            =>  __DIR__ . '/../vendor/bartlett/phpunit-loggertestlistener/src/Bartlett/LoggerTestListener.php',
-        'Monolog\Handler\GrowlHandler'
-            =>  __DIR__ . '/../vendor/bartlett/phpunit-loggertestlistener/extra/GrowlHandler.php',
-        'Monolog\Handler\AdvancedFilterHandler'
-            =>  __DIR__ . '/../vendor/bartlett/phpunit-loggertestlistener/extra/AdvancedFilterHandler.php',
-    )
-);
 
 require __DIR__ . '/Reference/GenericTest.php';
+require __DIR__ . '/ResultPrinter.php';
 
-use Monolog\Logger;
-use Monolog\Handler\RotatingFileHandler;
-use Monolog\Handler\GrowlHandler;
-use Monolog\Handler\AdvancedFilterHandler;
+use Psr\Log\AbstractLogger;
+use Psr\Log\LogLevel;
 
-class Psr3Logger extends Logger
+class Psr3ConsoleLogger extends AbstractLogger
 {
-    public function __construct($name = 'PHPUnit')
+    protected $channel;
+    protected $level;
+
+    /**
+     * Logging levels from syslog protocol defined in RFC 5424
+     *
+     * @var array $levels Logging levels
+     */
+    protected static $levels = array(
+        100 => 'DEBUG',
+        200 => 'INFO',
+        250 => 'NOTICE',
+        300 => 'WARNING',
+        400 => 'ERROR',
+        500 => 'CRITICAL',
+        550 => 'ALERT',
+        600 => 'EMERGENCY',
+    );
+
+    public function __construct($name = 'YourLogger', $level = LogLevel::DEBUG)
     {
-        // filter to be notified only on end test suite.
-        $filter1 = function($record) {
-            return (preg_match('/^TestSuite(.*)ended\. Tests/', $record['message']) === 1);
-        };
+        $this->channel = $name;
+        $this->level   = array_search(strtoupper($level), self::$levels);
+    }
 
-        $stream = new RotatingFileHandler('/var/logs/phpcompatinfo.log', 30);
-        $stream->setFilenameFormat('{filename}-{date}', 'Ymd');
-
-        $handlers = array($stream);
-
-        try {
-            $growl = new GrowlHandler(array(), Logger::NOTICE);
-
-            $filterGrowl = new AdvancedFilterHandler(
-                $growl,
-                array($filter1)
-            );
-            $handlers[] = $filterGrowl;
-
-        } catch (\Exception $e) {
-            // Growl client is probably not started
-            echo $e->getMessage(), PHP_EOL, PHP_EOL;
+    public function log($level, $message, array $context = array())
+    {
+        if (array_search(strtoupper($level), self::$levels) < $this->level) {
+            return;
         }
 
-        parent::__construct($name, $handlers);
+        if ($this->level == 100  // DEBUG
+            && isset($context['operation'])
+            && 'startTest' == $context['operation']
+        ) {
+            $describe = \PHPUnit_Util_Test::describe($context['test']);
+            $pos      = strpos($describe, $context['testName']);
+            $describe = substr($describe, $pos);
+            $message  = str_replace($context['testName'], $describe, $message);
+        }
+
+        echo
+            sprintf(
+                '%s',
+                $message
+            ),
+            PHP_EOL
+        ;
     }
 }
