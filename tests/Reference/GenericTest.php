@@ -69,6 +69,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
         'htscanner',
         'igbinary',
         'inclued',
+        'intl',
         'jsmin',
         'lzf',
         'mailparse',

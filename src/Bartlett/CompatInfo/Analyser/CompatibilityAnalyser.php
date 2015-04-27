@@ -149,15 +149,25 @@ class CompatibilityAnalyser extends AbstractAnalyser
 
             // conditional code target
             list($element, $values) = each($condition);
+            $values[0] = ltrim($values[0], "\\");
             $context = $conditionalFunctions[$element];
-            $target  = ('methods' == $context) ? ($values[0] .'::'. $values[1]) : $values[0];
+            if ('methods' == $context) {
+                $target = $values[1];  // method name
+                $extra  = $values[0];  //  class name
+            } else {
+                $target = $values[0];
+                $extra  = null;
+            }
 
             if ('extensions' == $context) {
                 $versions = array();
             } else {
-                $versions = $this->references->find($context, $target);
+                $versions = $this->references->find($context, $target, 0, $extra);
             }
 
+            if ('methods' == $context) {
+                $target = $values[0] . '::' . $values[1];
+            }
             $this->updateElementVersion($context, $target, $versions);
             $this->metrics[$context][$target]['optional'] = true;
 
@@ -1020,6 +1030,8 @@ class CompatibilityAnalyser extends AbstractAnalyser
         $this->updateElementVersion($context, $target, $versions);
         ++$this->metrics[$context][$target]['matches'];
 
+        $conditionalCode = isset($this->metrics[$context][$target]['optional']);
+
         // identify method
         $context  = 'methods';
         $versions = $this->references->find($context, $node->name, count($node->args), $target);
@@ -1027,8 +1039,15 @@ class CompatibilityAnalyser extends AbstractAnalyser
         $this->updateElementVersion($context, $target, $versions);
         ++$this->metrics[$context][$target]['matches'];
 
+        if ($conditionalCode) {
+            // tag method as optional if at least class is optional
+            $this->metrics[$context][$target]['optional'] = true;
+        }
+
+        $conditionalCode = isset($this->metrics[$context][$target]['optional']);
+
         // update current context that call this static method
-        $this->updateLocalVersions($versions);
+        $this->updateLocalVersions($versions, $conditionalCode);
     }
 
     /**
