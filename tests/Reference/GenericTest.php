@@ -123,12 +123,11 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      */
     public static function setUpBeforeClass()
     {
-        /*
         if (!extension_loaded(self::$ext)) {
             self::markTestSkipped(
                 self::$ext . ' extension is not available.'
             );
-        }*/
+        }
 
         self::$optionalreleases = array();
 
