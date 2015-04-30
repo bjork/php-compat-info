@@ -54,9 +54,12 @@ class ResultPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_
     {
         parent::__construct($out);
 
-        if ($this->isDebug()) {
+        $debug   = $this->isDebug();
+        $verbose = $this->isVerbose();
+
+        if ($debug) {
             $level = LogLevel::DEBUG;
-        } elseif ($this->isVerbose()) {
+        } elseif ($verbose) {
             $level = LogLevel::INFO;
         } else {
             $level = LogLevel::NOTICE;
@@ -64,7 +67,7 @@ class ResultPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_
 
         $console = new \Psr3ConsoleLogger('PHPUnitPrinterLogger', $level);
         $console->pushProcessor(
-            function (array $record) {
+            function (array $record) use ($verbose) {
                 if (!array_key_exists('operation', $record['context'])) {
                     return $record;
                 }
@@ -110,6 +113,9 @@ class ResultPrinter extends \PHPUnit_Util_Printer implements \PHPUnit_Framework_
 
                         $record['message'] = $resultMessage;
                     }
+
+                } elseif ($verbose && isset($context['reason'])) {
+                    $record['message'] .= "\n" . $context['reason'];
                 }
 
                 return $record;
