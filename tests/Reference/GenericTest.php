@@ -123,12 +123,6 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      */
     public static function setUpBeforeClass()
     {
-        if (!extension_loaded(self::$ext)) {
-            self::markTestSkipped(
-                self::$ext . ' extension is not available.'
-            );
-        }
-
         self::$optionalreleases = array();
 
         $releases       = array_keys(self::$obj->getReleases());
@@ -169,7 +163,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_array($elements));
 
-        if (empty($elements)) {
+        if (empty($elements) || !extension_loaded(self::$ext)) {
             // do not fails suite if no test case found in data provider
             $this->markTestSkipped(
                 sprintf(
@@ -292,9 +286,25 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that a reference exists and provides releases
+     * @group  reference
+     * @return void
+     */
+    public function testReference()
+    {
+        if (!extension_loaded(self::$ext)) {
+            $this->markTestSkipped(
+                sprintf('Extension %s is required.', self::$ext)
+            );
+        }
+        $this->assertTrue(true);
+    }
+
+    /**
      * Test than all referenced ini entries exists
      *
      * @dataProvider provideReferenceValues
+     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -312,6 +322,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that each ini entries are defined in reference
      *
+     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -343,6 +354,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      * Test than all referenced functions exists
      *
      * @dataProvider provideReferenceValues
+     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -360,6 +372,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that each functions are defined in reference
      *
+     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -388,6 +401,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      * Test than all referenced constants exists
      *
      * @dataProvider provideReferenceValues
+     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -405,6 +419,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that each constants are defined in reference
      *
+     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -438,6 +453,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      * Test than all referenced classes exists
      *
      * @dataProvider provideReferenceValues
+     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -455,6 +471,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that each classes are defined in reference
      *
+     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -496,6 +513,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that each class methods are defined in reference
      *
+     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -569,6 +587,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that each class constants are defined in reference
      *
+     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -618,6 +637,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      * Test than all referenced interfaces exists
      *
      * @dataProvider provideReferenceValues
+     * @depends testReference
      * @group  reference
      * @return void
      */
