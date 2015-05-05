@@ -142,6 +142,12 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      */
     public function provideReferenceValues($methodName)
     {
+        if (!extension_loaded(self::$ext)) {
+            $this->markTestSkipped(
+                sprintf('Extension %s is required.', self::$ext)
+            );
+        }
+
         if ('testGetIniEntriesFromReference' === $methodName) {
             $elements = self::$obj->getIniEntries();
 
@@ -163,7 +169,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_array($elements));
 
-        if (empty($elements) || !extension_loaded(self::$ext)) {
+        if (empty($elements)) {
             // do not fails suite if no test case found in data provider
             $this->markTestSkipped(
                 sprintf(
@@ -304,7 +310,6 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      * Test than all referenced ini entries exists
      *
      * @dataProvider provideReferenceValues
-     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -354,7 +359,6 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      * Test than all referenced functions exists
      *
      * @dataProvider provideReferenceValues
-     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -401,7 +405,6 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      * Test than all referenced constants exists
      *
      * @dataProvider provideReferenceValues
-     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -453,7 +456,6 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      * Test than all referenced classes exists
      *
      * @dataProvider provideReferenceValues
-     * @depends testReference
      * @group  reference
      * @return void
      */
@@ -637,7 +639,6 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      * Test than all referenced interfaces exists
      *
      * @dataProvider provideReferenceValues
-     * @depends testReference
      * @group  reference
      * @return void
      */
