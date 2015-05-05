@@ -1,5 +1,6 @@
 Thumbs.db
 *.tgz
+*.zip
 *.phar
 *.log
 vendor/
