@@ -1,8 +1,36 @@
 <?php
+/**
+ * Prints the result of a TestRunner run using a PSR-3 compatible logger.
+ *
+ * PHP version 5
+ *
+ * @category   PHP
+ * @package    PHP_CompatInfo
+ * @subpackage Tests
+ * @author     Laurent Laville <pear@laurent-laville.org>
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    GIT: $Id$
+ * @link       http://php5.laurent-laville.org/compatinfo/
+ * @since      Class available since Release 4.2.0
+ */
 
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 
+/**
+ * Prints the result of a TestRunner run using a PSR-3 compatible logger.
+ *
+ * - We log some PHPUnit events, depending of --verbose, --debug and --colors switches,
+ *   directly to the CLI console
+ *
+ * @category   PHP
+ * @package    PHP_CompatInfo
+ * @subpackage Tests
+ * @author     Laurent Laville <pear@laurent-laville.org>
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://php5.laurent-laville.org/compatinfo/
+ */
 class Psr3ConsoleLogger extends AbstractLogger
 {
     protected $channel;

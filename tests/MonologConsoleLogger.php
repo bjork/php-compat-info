@@ -1,4 +1,18 @@
 <?php
+/**
+ * Prints the result of a TestRunner run using Monolog.
+ *
+ * PHP version 5
+ *
+ * @category   PHP
+ * @package    PHP_CompatInfo
+ * @subpackage Tests
+ * @author     Laurent Laville <pear@laurent-laville.org>
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    GIT: $Id$
+ * @link       http://php5.laurent-laville.org/compatinfo/
+ * @since      Class available since Release 4.2.0
+ */
 
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
@@ -6,6 +20,22 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FilterHandler;
 use Monolog\Formatter\LineFormatter;
 
+/**
+ * Prints the result of a TestRunner run using Monolog and few handlers.
+ *
+ * - We log all PHPUnit events to a local file "phpunit-phpcompatinfo.log"
+ *   and keep history 30 days
+ * - We log some PHPUnit events, depending of --verbose, --debug and --colors switches,
+ *   directly to the CLI console
+ *
+ * @category   PHP
+ * @package    PHP_CompatInfo
+ * @subpackage Tests
+ * @author     Laurent Laville <pear@laurent-laville.org>
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://php5.laurent-laville.org/compatinfo/
+ */
 class MonologConsoleLogger extends Logger
 {
     /**
