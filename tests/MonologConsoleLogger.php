@@ -46,7 +46,7 @@ class MonologConsoleLogger extends Logger
      */
     public function __construct($name = 'YourLogger', $level = Logger::DEBUG)
     {
-        $stream = new RotatingFileHandler(__DIR__ . '/phpunit-phpcompatinfo.log', 30);
+        $stream = new RotatingFileHandler(__DIR__ . '/phpunit-phpcompatinfo-php' . PHP_VERSION_ID . '.log', 30);
         $stream->setFilenameFormat('{filename}-{date}', 'Ymd');
 
         $console = new StreamHandler('php://stdout');
