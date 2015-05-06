@@ -6,7 +6,8 @@
         "ext_max": "",
         "php_min": "5.1.0",
         "php_max": "",
-        "php_excludes": ""
+        "php_excludes": "",
+        "lib_requires": "libxml:0x020615"
     },
     {
         "ext_name_fk": 37,
@@ -87,7 +88,8 @@
         "ext_max": "",
         "php_min": "5.4.0",
         "php_max": "",
-        "php_excludes": ""
+        "php_excludes": "",
+        "lib_requires": "libxml:0x020708"
     },
     {
         "ext_name_fk": 37,
@@ -96,7 +98,8 @@
         "ext_max": "",
         "php_min": "5.4.0",
         "php_max": "",
-        "php_excludes": ""
+        "php_excludes": "",
+        "lib_requires": "libxml:0x020707"
     },
     {
         "ext_name_fk": 37,
@@ -177,7 +180,8 @@
         "ext_max": "",
         "php_min": "5.1.0",
         "php_max": "",
-        "php_excludes": ""
+        "php_excludes": "",
+        "lib_requires": "libxml:0x020615"
     },
     {
         "ext_name_fk": 37,
@@ -195,7 +199,8 @@
         "ext_max": "",
         "php_min": "5.2.12",
         "php_max": "",
-        "php_excludes": ""
+        "php_excludes": "",
+        "lib_requires": "libxml:0x020703"
     },
     {
         "ext_name_fk": 37,
@@ -213,7 +218,8 @@
         "ext_max": "",
         "php_min": "5.5.2",
         "php_max": "",
-        "php_excludes": ""
+        "php_excludes": "",
+        "lib_requires": "libxml:0x02060e"
     },
     {
         "ext_name_fk": 37,
