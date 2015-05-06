@@ -42,7 +42,8 @@
         "ext_max": "",
         "php_min": "5.4.8",
         "php_max": "",
-        "php_excludes": ""
+        "php_excludes": "",
+        "lib_requires": "openssl:0x0090708f"
     },
     {
         "ext_name_fk": 52,
@@ -60,7 +61,8 @@
         "ext_max": "",
         "php_min": "5.4.8",
         "php_max": "",
-        "php_excludes": ""
+        "php_excludes": "",
+        "lib_requires": "openssl:0x0090708f"
     },
     {
         "ext_name_fk": 52,
@@ -69,7 +71,8 @@
         "ext_max": "",
         "php_min": "5.4.8",
         "php_max": "",
-        "php_excludes": ""
+        "php_excludes": "",
+        "lib_requires": "openssl:0x0090708f"
     },
     {
         "ext_name_fk": 52,
@@ -78,7 +81,8 @@
         "ext_max": "",
         "php_min": "5.4.8",
         "php_max": "",
-        "php_excludes": ""
+        "php_excludes": "",
+        "lib_requires": "openssl:0x0090708f"
     },
     {
         "ext_name_fk": 52,
@@ -87,7 +91,8 @@
         "ext_max": "",
         "php_min": "5.4.8",
         "php_max": "",
-        "php_excludes": ""
+        "php_excludes": "",
+        "lib_requires": "openssl:0x0090708f"
     },
     {
         "ext_name_fk": 52,
