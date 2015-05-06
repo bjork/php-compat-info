@@ -19,6 +19,7 @@ namespace Bartlett\Tests\CompatInfo\Reference;
 
 use Bartlett\CompatInfo\Reference\ReferenceInterface;
 use Bartlett\CompatInfo\Reference\ExtensionFactory;
+use Bartlett\CompatInfo\Util\Version;
 
 /**
  * Tests for the PHP_CompatInfo, retrieving components informations
@@ -182,6 +183,17 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
 
         $dataset = array();
         foreach ($elements as $name => $range) {
+
+            if (array_key_exists('lib.requires', $range)
+                && !empty($range['lib.requires'])
+            ) {
+                list($libname, $vnumber) = explode(':', $range['lib.requires']);
+
+                if (Version::lib($libname) < $vnumber) {
+                    // not supported by current platform
+                    continue;
+                }
+            }
             $dataset[] = array($name, $range);
         }
         return $dataset;
