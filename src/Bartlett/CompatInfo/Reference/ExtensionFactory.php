@@ -57,45 +57,6 @@ class ExtensionFactory implements ReferenceInterface
         return $this->name;
     }
 
-    public function getMetaVersion($key = null, $extname = null)
-    {
-        if (in_array('curl', array($this->name, $extname))
-            && function_exists('curl_version')
-        ) {
-            $meta = curl_version();
-            $meta['version_text'] = $meta['version'];
-
-        } elseif (in_array('libxml', array($this->name, $extname))) {
-            $meta = array(
-                'version_number' => LIBXML_VERSION,
-                'version_text'   => LIBXML_DOTTED_VERSION,
-            );
-
-        } elseif (in_array('intl', array($this->name, $extname))) {
-            $meta = array(
-                'version_number' => defined('INTL_ICU_VERSION')
-                    ? INTL_ICU_VERSION : false,
-                'version_text'   => defined('INTL_ICU_VERSION')
-                    ? INTL_ICU_VERSION : false,
-            );
-
-        } elseif (in_array('openssl', array($this->name, $extname))) {
-            $meta = array(
-                'version_number' => defined('OPENSSL_VERSION_NUMBER')
-                    ? OPENSSL_VERSION_NUMBER : false,
-                'version_text'   => defined('OPENSSL_VERSION_TEXT')
-                    ? OPENSSL_VERSION_TEXT : false,
-            );
-        }
-        if (isset($meta)) {
-            if (isset($key) && array_key_exists($key, $meta)) {
-                return $meta[$key];
-            }
-            return $meta;
-        }
-        return false;
-    }
-
     /**
      * {@inheritdoc}
      */
