@@ -124,6 +124,7 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      */
     public static function setUpBeforeClass()
     {
+        return;
         self::$optionalreleases = array();
 
         $releases       = array_keys(self::$obj->getReleases());
