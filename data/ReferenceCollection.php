@@ -215,6 +215,10 @@ class ReferenceCollection
         $this->stmtFunction->execute($criteria);
         $row = $this->stmtFunction->fetch(\PDO::FETCH_ASSOC);
 
+        if (!array_key_exists('lib_requires', $rec)) {
+            $rec['lib_requires'] = '';
+        }
+
         if (is_array($row)) {
             if ($row == $rec) {
                 // nothing to do
@@ -238,6 +242,10 @@ class ReferenceCollection
         );
         $this->stmtConstant->execute($criteria);
         $row = $this->stmtConstant->fetch(\PDO::FETCH_ASSOC);
+
+        if (!array_key_exists('lib_requires', $rec)) {
+            $rec['lib_requires'] = '';
+        }
 
         if (is_array($row)) {
             if ($row == $rec) {
@@ -320,6 +328,7 @@ class ReferenceCollection
             ' ext_min VARCHAR(16), ext_max VARCHAR(16),' .
             ' php_min VARCHAR(16), php_max VARCHAR(16),' .
             ' parameters VARCHAR(255), php_excludes VARCHAR(255), ' .
+            ' lib_requires VARCHAR(255), ' .
             ' PRIMARY KEY (ext_name_fk, name))'
         );
         $this->dbal->exec(
@@ -328,6 +337,7 @@ class ReferenceCollection
             ' ext_min VARCHAR(16), ext_max VARCHAR(16),' .
             ' php_min VARCHAR(16), php_max VARCHAR(16),' .
             ' php_excludes VARCHAR(255), ' .
+            ' lib_requires VARCHAR(255), ' .
             ' PRIMARY KEY (ext_name_fk, name))'
         );
         $this->dbal->exec(
@@ -374,13 +384,13 @@ class ReferenceCollection
         );
         $this->stmtFunctions = $this->dbal->prepare(
             'REPLACE INTO ' . $tblFunctions .
-            ' (ext_name_fk, name, ext_min, ext_max, php_min, php_max, parameters, php_excludes)' .
-            ' VALUES (:ext_name_fk, :name, :ext_min, :ext_max, :php_min, :php_max, :parameters, :php_excludes)'
+            ' (ext_name_fk, name, ext_min, ext_max, php_min, php_max, parameters, php_excludes, lib_requires)' .
+            ' VALUES (:ext_name_fk, :name, :ext_min, :ext_max, :php_min, :php_max, :parameters, :php_excludes, :lib_requires)'
         );
         $this->stmtConstants = $this->dbal->prepare(
             'REPLACE INTO ' . $tblConstants .
-            ' (ext_name_fk, name, ext_min, ext_max, php_min, php_max, php_excludes)' .
-            ' VALUES (:ext_name_fk, :name, :ext_min, :ext_max, :php_min, :php_max, :php_excludes)'
+            ' (ext_name_fk, name, ext_min, ext_max, php_min, php_max, php_excludes, lib_requires)' .
+            ' VALUES (:ext_name_fk, :name, :ext_min, :ext_max, :php_min, :php_max, :php_excludes, :lib_requires)'
         );
         $this->stmtClassConstant = $this->dbal->prepare(
             'REPLACE INTO ' . $tblClassConst .
@@ -426,13 +436,13 @@ class ReferenceCollection
         );
         $this->stmtFunction = $this->dbal->prepare(
             'SELECT' .
-            ' ext_name_fk, name, ext_min, ext_max, php_min, php_max, parameters, php_excludes' .
+            ' ext_name_fk, name, ext_min, ext_max, php_min, php_max, parameters, php_excludes, lib_requires' .
             ' FROM ' . $tblFunctions .
             ' WHERE ext_name_fk = :ext_name_fk AND name = :name COLLATE NOCASE'
         );
         $this->stmtConstant = $this->dbal->prepare(
             'SELECT' .
-            ' ext_name_fk, name, ext_min, ext_max, php_min, php_max, php_excludes' .
+            ' ext_name_fk, name, ext_min, ext_max, php_min, php_max, php_excludes, lib_requires' .
             ' FROM ' . $tblConstants .
             ' WHERE ext_name_fk = :ext_name_fk AND name = :name COLLATE NOCASE'
         );
