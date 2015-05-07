@@ -16,6 +16,7 @@ class ReferenceCollection
     private $dbal;
     private $stmtVersions;
     private $stmtExtensions;
+    private $stmtPersistent;
     private $stmtReleases;
     private $stmtRelease;
     private $stmtIniEntries;
@@ -53,6 +54,11 @@ class ReferenceCollection
     public function addExtension($rec)
     {
         $this->changedElements('stmtExtensions', $rec);
+    }
+
+    public function addPersistent($rec)
+    {
+        $this->changedElements('stmtPersistent', $rec);
     }
 
     public function addRelease($rec)
@@ -266,6 +272,7 @@ class ReferenceCollection
     {
         $tblVersions   = 'bartlett_compatinfo_versions';
         $tblExtensions = 'bartlett_compatinfo_extensions';
+        $tblPersistent = 'bartlett_compatinfo_persistent';
         $tblReleases   = 'bartlett_compatinfo_releases';
         $tblIniEntries = 'bartlett_compatinfo_inientries';
         $tblClasses    = 'bartlett_compatinfo_classes';
@@ -284,6 +291,11 @@ class ReferenceCollection
             'CREATE TABLE IF NOT EXISTS ' . $tblExtensions .
             ' (id INTEGER, name VARCHAR(32),' .
             ' PRIMARY KEY (id))'
+        );
+        $this->dbal->exec(
+            'CREATE TABLE IF NOT EXISTS ' . $tblPersistent .
+            ' (ext_name_fk INTEGER, rel_version VARCHAR(8),' .
+            ' PRIMARY KEY (ext_name_fk, rel_version))'
         );
         $this->dbal->exec(
             'CREATE TABLE IF NOT EXISTS ' . $tblReleases .
@@ -356,6 +368,11 @@ class ReferenceCollection
             'INSERT INTO ' . $tblExtensions .
             ' (id, name)' .
             ' VALUES (:id, :name)'
+        );
+        $this->stmtPersistent = $this->dbal->prepare(
+            'INSERT INTO ' . $tblPersistent .
+            ' (ext_name_fk, rel_version)' .
+            ' VALUES (:ext_name_fk, :rel_version)'
         );
         $this->stmtReleases = $this->dbal->prepare(
             'REPLACE INTO ' . $tblReleases .

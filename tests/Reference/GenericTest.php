@@ -124,11 +124,16 @@ abstract class GenericTest extends \PHPUnit_Framework_TestCase
      */
     public static function setUpBeforeClass()
     {
-        return;
         self::$optionalreleases = array();
 
         $releases       = array_keys(self::$obj->getReleases());
         $currentVersion = self::$obj->getCurrentVersion();
+
+        if ($currentVersion === false) {
+            // extension did not provide any version information
+            return;
+        }
+
         // platform dependant
         foreach ($releases as $rel_version) {
             if (version_compare($currentVersion, $rel_version, 'lt')) {

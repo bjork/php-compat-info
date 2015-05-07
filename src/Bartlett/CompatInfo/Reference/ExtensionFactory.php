@@ -62,16 +62,15 @@ class ExtensionFactory implements ReferenceInterface
      */
     public function getCurrentVersion()
     {
-        $version = phpversion($this->name);
-        $pattern = '/^[0-9]+\.[0-9]+/';
-        if (!preg_match($pattern, $version)) {
-            /**
-             * When version is not provided by the extension, or not standard format
-             * or we don't have it in our reference (ex snmp) because have no sense
-             * be sure at least to return latest PHP version supported.
-             */
+        $persistent = $this->storage->getMetaData('persistent');
+
+        if (empty($persistent)) {
+            $version = phpversion($this->name);
+        } else {
+            // extension is bundled with PHP
             $version = self::getLatestPhpVersion();
         }
+
         return $version;
     }
 

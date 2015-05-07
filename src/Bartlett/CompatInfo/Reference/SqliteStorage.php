@@ -31,6 +31,7 @@ class SqliteStorage
 {
     private $name;
     private $initialized = false;
+    private $stmtPersistent;
     private $stmtReleases;
     private $stmtIniEntries;
     private $stmtClasses;
@@ -134,6 +135,13 @@ class SqliteStorage
     {
         $pdo = Environment::initRefDb();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $this->stmtPersistent = $pdo->prepare(
+            'SELECT name,' .
+            ' rel_version as "ext.min"' .
+            ' FROM bartlett_compatinfo_persistent p,  bartlett_compatinfo_extensions e' .
+            ' WHERE p.ext_name_fk = e.id AND e.name = :name COLLATE NOCASE'
+        );
 
         $this->stmtReleases = $pdo->prepare(
             'SELECT rel_date as "date", rel_state as "state",' .

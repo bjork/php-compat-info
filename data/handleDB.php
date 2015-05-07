@@ -231,6 +231,14 @@ class DbInitCommand extends Command
                 $ref->addMethod($rec);
             }
 
+            if ('core' == $refName) {
+                $ext  = 'persistent';
+                $data = $this->readData($refName, $ext);
+                foreach ($data as $rec) {
+                    $ref->addPersistent($rec);
+                }
+            }
+
             $pdo->commit();
             $progress->advance();
         }
@@ -259,6 +267,7 @@ class DbInitCommand extends Command
                 'iniEntries' => array('4', '5'),
                 'interfaces' => array('5'),
                 'releases'   => array('4', '5'),
+                'persistent' => array(''),
             ),
             'standard' => array(
                 'classes'    => array('4', '5'),
