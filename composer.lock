@@ -142,16 +142,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v1.2.2",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "08f97eb4efa029e2fafb6d8c98b71731bf0cf621"
+                "reference": "dff239267fd1befa1cd40430c9ed12591aa720ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/08f97eb4efa029e2fafb6d8c98b71731bf0cf621",
-                "reference": "08f97eb4efa029e2fafb6d8c98b71731bf0cf621",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/dff239267fd1befa1cd40430c9ed12591aa720ca",
+                "reference": "dff239267fd1befa1cd40430c9ed12591aa720ca",
                 "shasum": ""
             },
             "require": {
@@ -161,7 +161,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -183,7 +183,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2015-04-03 14:33:59"
+            "time": "2015-05-02 15:40:40"
         },
         {
             "name": "phpunit/php-timer",
@@ -312,17 +312,17 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.6.6",
+            "version": "v2.6.7",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "5b91dc4ed5eb08553f57f6df04c4730a73992667"
+                "reference": "ebc5679854aa24ed7d65062e9e3ab0b18a917272"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/5b91dc4ed5eb08553f57f6df04c4730a73992667",
-                "reference": "5b91dc4ed5eb08553f57f6df04c4730a73992667",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/ebc5679854aa24ed7d65062e9e3ab0b18a917272",
+                "reference": "ebc5679854aa24ed7d65062e9e3ab0b18a917272",
                 "shasum": ""
             },
             "require": {
@@ -356,31 +356,31 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
                     "name": "Fabien Potencier",
                     "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony Console Component",
-            "homepage": "http://symfony.com",
-            "time": "2015-03-30 15:54:10"
+            "homepage": "https://symfony.com",
+            "time": "2015-05-02 15:18:45"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.6.6",
+            "version": "v2.6.7",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "70f7c8478739ad21e3deef0d977b38c77f1fb284"
+                "reference": "672593bc4b0043a0acf91903bb75a1c82d8f2e02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/70f7c8478739ad21e3deef0d977b38c77f1fb284",
-                "reference": "70f7c8478739ad21e3deef0d977b38c77f1fb284",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/672593bc4b0043a0acf91903bb75a1c82d8f2e02",
+                "reference": "672593bc4b0043a0acf91903bb75a1c82d8f2e02",
                 "shasum": ""
             },
             "require": {
@@ -415,31 +415,31 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
                     "name": "Fabien Potencier",
                     "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony EventDispatcher Component",
-            "homepage": "http://symfony.com",
-            "time": "2015-03-13 17:37:22"
+            "homepage": "https://symfony.com",
+            "time": "2015-05-02 15:18:45"
         },
         {
             "name": "symfony/finder",
-            "version": "v2.6.6",
+            "version": "v2.6.7",
             "target-dir": "Symfony/Component/Finder",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Finder.git",
-                "reference": "5dbe2e73a580618f5b4880fda93406eed25de251"
+                "reference": "704c64c8b12c8882640d5c0330a8414b1e06dc99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Finder/zipball/5dbe2e73a580618f5b4880fda93406eed25de251",
-                "reference": "5dbe2e73a580618f5b4880fda93406eed25de251",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/704c64c8b12c8882640d5c0330a8414b1e06dc99",
+                "reference": "704c64c8b12c8882640d5c0330a8414b1e06dc99",
                 "shasum": ""
             },
             "require": {
@@ -465,32 +465,32 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
                     "name": "Fabien Potencier",
                     "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony Finder Component",
-            "homepage": "http://symfony.com",
-            "time": "2015-03-30 15:54:10"
+            "homepage": "https://symfony.com",
+            "time": "2015-05-02 15:18:45"
         }
     ],
     "packages-dev": [
         {
             "name": "bartlett/phpunit-loggertestlistener",
-            "version": "1.3.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/llaville/phpunit-LoggerTestListener.git",
-                "reference": "1b3f6d3ec4b2d60a7c2dbadd947feefb44b1b800"
+                "reference": "7ad1d57a5f51490d09e2395d15d791c469353264"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/llaville/phpunit-LoggerTestListener/zipball/1b3f6d3ec4b2d60a7c2dbadd947feefb44b1b800",
-                "reference": "1b3f6d3ec4b2d60a7c2dbadd947feefb44b1b800",
+                "url": "https://api.github.com/repos/llaville/phpunit-LoggerTestListener/zipball/7ad1d57a5f51490d09e2395d15d791c469353264",
+                "reference": "7ad1d57a5f51490d09e2395d15d791c469353264",
                 "shasum": ""
             },
             "require": {
@@ -498,9 +498,11 @@
                 "psr/log": "~1.0"
             },
             "require-dev": {
+                "bartlett/monolog-callbackfilterhandler": "~1.0",
                 "monolog/monolog": "~1.10"
             },
             "suggest": {
+                "bartlett/monolog-callbackfilterhandler": "Advanced filtering strategies for Monolog",
                 "monolog/monolog": "For advanced logging strategies"
             },
             "type": "library",
@@ -523,7 +525,7 @@
             ],
             "description": "PHPUnit Test Suite listener for compatible PSR-3 logger",
             "homepage": "https://github.com/llaville/phpunit-LoggerTestListener",
-            "time": "2015-04-13 18:37:12"
+            "time": "2015-05-04 11:26:44"
         },
         {
             "name": "doctrine/cache",
