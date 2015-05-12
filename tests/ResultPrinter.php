@@ -54,8 +54,7 @@ class ResultPrinter extends \PHPUnit_TextUI_ResultPrinter
             $minLevelOrList = array(LogLevel::NOTICE, LogLevel::ERROR);
         }
 
-        //$console = new \Psr3ConsoleLogger('PHPUnitPrinterLogger');
-        $console = new \MonologConsoleLogger('PHPUnitPrinterLogger');
+        $console = new \MonologConsoleLogger('ResultPrinter');
         $console->setAcceptedLevels($minLevelOrList);
 
         $handlers = $console->getHandlers();
