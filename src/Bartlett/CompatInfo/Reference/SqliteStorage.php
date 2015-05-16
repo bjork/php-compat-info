@@ -149,7 +149,7 @@ class SqliteStorage
             ' php_min as "php.min", php_max as "php.max",' .
             ' deprecated' .
             ' FROM bartlett_compatinfo_inientries i,  bartlett_compatinfo_extensions e' .
-            ' WHERE i.ext_name_fk = e.id AND i.name = :name COLLATE NOCASE'
+            ' WHERE i.ext_name_fk = e.id AND e.name = :name COLLATE NOCASE'
         );
 
         $this->stmtClasses = $pdo->prepare(
