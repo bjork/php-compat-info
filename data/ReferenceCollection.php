@@ -215,6 +215,10 @@ class ReferenceCollection
         $this->stmtFunction->execute($criteria);
         $row = $this->stmtFunction->fetch(\PDO::FETCH_ASSOC);
 
+        if (!isset($rec['deprecated'])) {
+            $rec['deprecated'] = '';
+        }
+
         if (is_array($row)) {
             if ($row == $rec) {
                 // nothing to do
@@ -319,7 +323,8 @@ class ReferenceCollection
             ' (ext_name_fk INTEGER, name VARCHAR(32),' .
             ' ext_min VARCHAR(16), ext_max VARCHAR(16),' .
             ' php_min VARCHAR(16), php_max VARCHAR(16),' .
-            ' parameters VARCHAR(255), php_excludes VARCHAR(255), ' .
+            ' parameters VARCHAR(255), php_excludes VARCHAR(255),' .
+            ' deprecated VARCHAR(16),' .
             ' PRIMARY KEY (ext_name_fk, name))'
         );
         $this->dbal->exec(
@@ -374,8 +379,8 @@ class ReferenceCollection
         );
         $this->stmtFunctions = $this->dbal->prepare(
             'REPLACE INTO ' . $tblFunctions .
-            ' (ext_name_fk, name, ext_min, ext_max, php_min, php_max, parameters, php_excludes)' .
-            ' VALUES (:ext_name_fk, :name, :ext_min, :ext_max, :php_min, :php_max, :parameters, :php_excludes)'
+            ' (ext_name_fk, name, ext_min, ext_max, php_min, php_max, parameters, php_excludes, deprecated)' .
+            ' VALUES (:ext_name_fk, :name, :ext_min, :ext_max, :php_min, :php_max, :parameters, :php_excludes, :deprecated)'
         );
         $this->stmtConstants = $this->dbal->prepare(
             'REPLACE INTO ' . $tblConstants .
@@ -426,7 +431,7 @@ class ReferenceCollection
         );
         $this->stmtFunction = $this->dbal->prepare(
             'SELECT' .
-            ' ext_name_fk, name, ext_min, ext_max, php_min, php_max, parameters, php_excludes' .
+            ' ext_name_fk, name, ext_min, ext_max, php_min, php_max, parameters, php_excludes, deprecated' .
             ' FROM ' . $tblFunctions .
             ' WHERE ext_name_fk = :ext_name_fk AND name = :name COLLATE NOCASE'
         );
