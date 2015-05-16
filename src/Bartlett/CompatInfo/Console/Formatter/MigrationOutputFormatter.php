@@ -75,25 +75,40 @@ class MigrationOutputFormatter extends OutputFormatter
     protected function printBody(OutputInterface $output, $response)
     {
         foreach ($response as $group => $elements) {
-            if (empty($elements['constants']) && empty($elements['functions'])) {
-                $output->writeln(sprintf('%s<warning>No %s elements found</warning>', PHP_EOL, $group));
+            if (empty($elements['iniEntries'])
+                && empty($elements['constants'])
+                && empty($elements['functions'])
+            ) {
+                $output->writeln(
+                    sprintf('%s<warning>No %s elements found</warning>', PHP_EOL, $group)
+                );
                 continue;
             }
+            ksort($elements['iniEntries']);
             ksort($elements['constants']);
             ksort($elements['functions']);
 
             $this->counters[$group] = array(
-                'constants' => 0,
-                'functions' => 0,
+                'iniEntries' => 0,
+                'constants'  => 0,
+                'functions'  => 0,
             );
 
             foreach ($elements as $context => $items) {
                 $this->counters[$group][$context] = count($items);
 
-                if ('constants' == $context) {
+                if ('iniEntries' == $context) {
+                    $template = '%sINI directive <info>%s</info> is <%s>%s</%s> since <info>%s</info>';
+
+                } elseif ('constants' == $context) {
                     $template = '%sConstant <info>%s</info> is <%s>%s</%s> since <info>%s</info>';
-                } else {
+
+                } elseif ('functions' == $context) {
                     $template = '%sFunction <info>%s()</info> is <%s>%s</%s> since <info>%s</info>';
+
+                } else {
+                    // unknown context, skips
+                    continue;
                 }
 
                 foreach ($items as $element => $values) {

@@ -43,12 +43,14 @@ class MigrationAnalyser extends AbstractAnalyser
 
         $this->metrics = array(
             'forbidden'  => array(
-                'constants' => array(),
-                'functions' => array(),
+                'iniEntries' => array(),
+                'constants'  => array(),
+                'functions'  => array(),
             ),
             'deprecated' => array(
-                'constants' => array(),
-                'functions' => array(),
+                'iniEntries' => array(),
+                'constants'  => array(),
+                'functions'  => array(),
             ),
         );
 
@@ -85,6 +87,15 @@ class MigrationAnalyser extends AbstractAnalyser
         }
 
         $element = (string) $node->name;
+
+        if (in_array($element, array('ini_set', 'ini_get'))) {
+            if (!$node->args[0]->value instanceof Node\Scalar\String_) {
+                // cannot resolved undirect ini entry identification
+                return;
+            }
+            $context = 'iniEntries';
+            $element = $node->args[0]->value->value;
+        }
 
         if (isset($this->metrics['forbidden'][$context][$element])) {
             $group = 'forbidden';
