@@ -86,20 +86,16 @@ class MigrationAnalyser extends AbstractAnalyser
 
         $element = (string) $node->name;
 
-        if (isset($this->metrics['deprecated'][$context][$element])) {
-            $group = 'deprecated';
-
-        } elseif (isset($this->metrics['forbidden'][$context][$element])) {
+        if (isset($this->metrics['forbidden'][$context][$element])) {
             $group = 'forbidden';
+
+        } elseif (isset($this->metrics['deprecated'][$context][$element])) {
+            $group = 'deprecated';
 
         } else {
             $versions = $this->references->find($context, $element);
 
-            if (!empty($versions['deprecated'])) {
-                $group = 'deprecated';
-                $version = $versions['deprecated'];
-
-            } elseif (!empty($versions['php.max'])) {
+            if (!empty($versions['php.max'])) {
                 $group = 'forbidden';
 
                 if (version_compare($versions['php.max'], '5.3', 'lt')) {
@@ -117,6 +113,10 @@ class MigrationAnalyser extends AbstractAnalyser
                 } elseif (version_compare($versions['php.max'], '7.0', 'lt')) {
                     $version = '7.0.0';
                 }
+
+            } elseif (!empty($versions['deprecated'])) {
+                $version = $versions['deprecated'];
+                $group = 'deprecated';
 
             } else {
                 return;
