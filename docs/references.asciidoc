@@ -279,7 +279,7 @@ endif::basebackend-docbook[]
 | [label label-default]#2.0.0#
 
 | mongo
-1.6.8 {stable}
+1.6.9 {stable}
 | [label label-info]#2.8.0#
 
 | msgpack
@@ -419,7 +419,7 @@ endif::basebackend-docbook[]
 | [label label-default]#2.0.0#
 
 | stomp
-1.0.6 {stable}
+1.0.8 {stable}
 | [label label-info]#2.16.0#
 
 | svn
@@ -471,7 +471,7 @@ endif::basebackend-docbook[]
 | [label label-info]#2.8.0#
 
 | xdebug
-2.3.2 {stable}
+2.3.3 {stable}
 | [label label-default]#2.0.0#
 
 | xhprof
@@ -507,7 +507,7 @@ endif::basebackend-docbook[]
 | [label label-info]#3.3.0#
 
 | yaml
-1.1.1 {stable}
+1.2.0 {stable}
 | [label label-info]#2.5.0#
 
 | Zend OPcache

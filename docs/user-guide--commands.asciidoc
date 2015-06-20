@@ -30,7 +30,7 @@ when you invoke the `phpcompatinfo` command, you should obtain the following com
  | .__/|_| |_| .__/ \____\___/|_| |_| |_| .__/ \__,_|\__|___|_| |_|_|  \___/
  |_|         |_|                        |_|
 
-phpCompatInfo version 4.1.0 DB built Apr 16 2015 09:24:43 CEST
+phpCompatInfo version 4.3.0 DB built Jun 16 2015 10:05:54 CEST
 
 Usage:
  [options] command [arguments]
@@ -77,7 +77,7 @@ Auto-Diagnose:
 
 Checking php settings:
 - Requires PHP 5.3.2 or better OK
-- php.ini file loaded C:\UwAmp\bin\php\php-5.6.7\php.ini
+- php.ini file loaded C:\UwAmp\bin\php\php-5.6.9\php.ini
 - date extension loaded YES
 - json extension loaded YES
 - pcre extension loaded YES
@@ -115,7 +115,7 @@ $ phpcompatinfo diagnose:run
 ----
 Checking php settings:
 - Requires PHP 5.3.2 or better OK
-- php.ini file loaded C:\UwAmp\bin\php\php-5.6.7\php.ini
+- php.ini file loaded C:\UwAmp\bin\php\php-5.6.9\php.ini
 - date extension loaded YES
 - json extension loaded YES
 - pcre extension loaded YES
@@ -213,6 +213,22 @@ $ phpcompatinfo analyser:run --alias current
 ----
 include::compatibility_analysis.out.asciidoc[]
 ----
++
+NOTE: The `PHP all` column tell us which version is required when all code features are used
++
+[source,bash]
+.Since version [label label-primary]#4.2#, you can filter results with a user closure
+----
+$ phpcompatinfo analyser:run --filter=YourFilters.php .
+----
++
+NOTE: Learn more on
+ifdef::basebackend-bootstrap[]
+link:developer-guide&#45;&#45;filters.html[developer's guide]
+endif::basebackend-bootstrap[]
+ifdef::basebackend-docbook[]
+chapter xref:_build_your_filters[]
+endif::basebackend-docbook[]
 
 [horizontal]
 reflection:class::
