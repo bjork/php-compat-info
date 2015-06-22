@@ -25,12 +25,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @license  http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version  Release: @package_version@
  * @link     http://php5.laurent-laville.org/compatinfo/
- * @since    Class available since Release 4.2.0
+ * @since    Class available since Release 4.4.0
  */
 class MigrationOutputFormatter extends OutputFormatter
 {
-    protected $counters = array();
-
     /**
      * Migration Analyser console output format
      *
@@ -43,11 +41,8 @@ class MigrationOutputFormatter extends OutputFormatter
     {
         $this->printHeader($output);
 
-        // prints details of deprecated and removed elements (function or constant)
+        // prints details of each elements found
         $this->printBody($output, $response);
-
-        // prints summary
-        $this->printFooter($output);
     }
 
     /**
@@ -74,56 +69,117 @@ class MigrationOutputFormatter extends OutputFormatter
      */
     protected function printBody(OutputInterface $output, $response)
     {
-        foreach ($response as $group => $elements) {
-            if (empty($elements['iniEntries'])
-                && empty($elements['constants'])
-                && empty($elements['functions'])
-            ) {
-                $output->writeln(
-                    sprintf('%s<warning>No %s elements found</warning>', PHP_EOL, $group)
-                );
-                continue;
-            }
-            ksort($elements['iniEntries']);
-            ksort($elements['constants']);
-            ksort($elements['functions']);
+        $templates = array(
+            'KeywordReserved'
+                => '%sKeyword <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
+            'Deprecated'
+                => '%sFunction <info>%s()</info> is <%s>%s</%s> since <info>%s</info>',
+            'Removed'
+                => '%sFunction <info>%s()</info> is <%s>%s</%s> since <info>%s</info>',
+            'ShortOpenTag'
+                => '%s<info>%s</info> syntax is <%s>%s</%s> since <info>%s</info>',
+            'ShortArraySyntax'
+                => '%s<info>%s</info> syntax is <%s>%s</%s> since <info>%s</info>',
+            'ArrayDereferencingSyntax'
+                => '%s<info>%s</info> syntax is <%s>%s</%s> since <info>%s</info>',
+            'ClassMemberAccessOnInstantiation'
+                => '%s<info>%s</info> syntax is <%s>%s</%s> since <info>%s</info>',
+            'ConstSyntax'
+                => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
+            'MagicMethods'
+                => '%sMagic Method <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
+        );
 
-            $this->counters[$group] = array(
-                'iniEntries' => 0,
-                'constants'  => 0,
-                'functions'  => 0,
+        foreach ($response as $group => $elements) {
+
+            $output->writeln(
+                sprintf('%s<info>Report of %s elements</info>%s', PHP_EOL, $group, PHP_EOL)
             );
 
-            foreach ($elements as $context => $items) {
-                $this->counters[$group][$context] = count($items);
+            foreach ($elements as $element => $values) {
+                if ('KeywordReserved' == $group) {
+                    $status = 'error';
+                    $label  = 'reserved';
 
-                if ('iniEntries' == $context) {
-                    $template = '%sINI directive <info>%s</info> is <%s>%s</%s> since <info>%s</info>';
+                } elseif ('Deprecated' == $group) {
+                    $status = 'warning';
+                    $label  = 'deprecated';
 
-                } elseif ('constants' == $context) {
-                    $template = '%sConstant <info>%s</info> is <%s>%s</%s> since <info>%s</info>';
+                } elseif ('Removed' == $group) {
+                    $status = 'error';
+                    $label  = 'forbidden';
 
-                } elseif ('functions' == $context) {
-                    $template = '%sFunction <info>%s()</info> is <%s>%s</%s> since <info>%s</info>';
+                } elseif ('ShortOpenTag' == $group) {
+                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
+                        $status = 'info';
+                    } else {
+                        $status = 'warning';
+                    }
+                    $label   = 'always available';
+                    $element = 'Short open tag';
+
+                } elseif ('ShortArraySyntax' == $group) {
+                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
+                        $status = 'info';
+                    } else {
+                        $status = 'error';
+                    }
+                    $label   = 'allowed';
+                    $element = 'Short array';
+
+                } elseif ('ArrayDereferencingSyntax' == $group) {
+                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
+                        $status = 'info';
+                    } else {
+                        $status = 'error';
+                    }
+                    $label   = 'allowed';
+                    $element = 'Array dereferencing';
+
+                } elseif ('ClassMemberAccessOnInstantiation' == $group) {
+                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
+                        $status = 'info';
+                    } else {
+                        $status = 'error';
+                    }
+                    $label   = 'allowed';
+                    $element = 'Class member access on instantiation';
+
+                } elseif ('ConstSyntax' == $group) {
+                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
+                        $status = 'info';
+                    } else {
+                        $status = 'error';
+                    }
+                    $label   = 'allowed';
+                    $element = 'Use of CONST keyword outside of a class';
+
+                } elseif ('MagicMethods' == $group) {
+                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
+                        $status = 'info';
+                    } else {
+                        $status = 'error';
+                    }
+                    $label = 'available';
 
                 } else {
-                    // unknown context, skips
-                    continue;
+                    $status = 'error';
+                    $label  = $group;
                 }
 
-                foreach ($items as $element => $values) {
-                    $status = ($group == 'deprecated') ? 'warning' : 'error';
-                    $output->writeln(
-                        sprintf(
-                            $template,
-                            PHP_EOL,
-                            $element,
-                            $status,
-                            $group,
-                            $status,
-                            $values['version']
-                        )
-                    );
+                $output->writeln(
+                    sprintf(
+                        $templates[$group],
+                        PHP_EOL,
+                        $element,
+                        $status,
+                        $label,
+                        $status,
+                        $values['version']
+                    )
+                );
+                if ($output->isVerbose()) {
+                    // prints each use location
                     $output->writeln(str_repeat('-', 79));
                     foreach ($values['spots'] as $spot) {
                         $output->writeln(
@@ -138,50 +194,5 @@ class MigrationOutputFormatter extends OutputFormatter
                 }
             }
         }
-    }
-
-    /**
-     * Prints summary of elements detected
-     *
-     * @param OutputInterface $output Console Output concrete instance
-     *
-     * @return void
-     */
-    protected function printFooter(OutputInterface $output)
-    {
-        foreach ($this->counters as $group => $counters) {
-            $$group = '';
-
-            foreach ($counters as $context => $count) {
-                if ($count > 0) {
-                    $$group .= sprintf(' and %d %s', $counters[$context], $context);
-                }
-            }
-            $$group .= " $group";
-            $$group  = ltrim($$group, ' and ');
-        }
-
-        if (!isset($forbidden)) {
-            $forbidden = '';
-        }
-        $forbidden .= ', ';
-
-        if (!isset($deprecated)) {
-            $deprecated = '';
-        }
-        $deprecated .= ', ';
-
-        $results = trim($forbidden . $deprecated, ', ');
-        if (empty($results)) {
-            $results = 'nothing';
-        }
-
-        $output->writeln(
-            sprintf(
-                '%s<php>Found %s</php>',
-                PHP_EOL,
-                $results
-            )
-        );
     }
 }
