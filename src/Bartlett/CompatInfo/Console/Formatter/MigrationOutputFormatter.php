@@ -88,6 +88,8 @@ class MigrationOutputFormatter extends OutputFormatter
                 => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
             'MagicMethods'
                 => '%sMagic Method <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
+            'AnonymousFunction'
+                => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
         );
 
         foreach ($response as $group => $elements) {
@@ -161,6 +163,22 @@ class MigrationOutputFormatter extends OutputFormatter
                         $status = 'error';
                     }
                     $label = 'available';
+
+                } elseif('AnonymousFunction' == $group) {
+                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
+                        $status = 'info';
+                    } else {
+                        $status = 'error';
+                    }
+                    $label = 'allowed';
+
+                    if ('this' == $element) {
+                        $element = 'Use of $this inside a closure';
+                    } elseif (in_array($element, array('self', 'static'))) {
+                        $element = sprintf('Use of %s inside a closure', $element);
+                    } else {
+                        $element = 'Anonymous function';
+                    }
 
                 } else {
                     $status = 'error';
