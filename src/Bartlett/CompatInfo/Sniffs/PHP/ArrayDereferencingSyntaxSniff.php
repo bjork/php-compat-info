@@ -17,15 +17,12 @@ use PhpParser\Node;
 class ArrayDereferencingSyntaxSniff extends SniffAbstract
 {
     private $arrayDereferencingSyntax;
-    private $tokens;
 
     public function enterSniff()
     {
         parent::enterSniff();
 
         $this->arrayDereferencingSyntax = array();
-
-        $this->tokens = $this->visitor->getTokens();
     }
 
     public function leaveSniff()

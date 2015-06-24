@@ -17,15 +17,12 @@ use PhpParser\Node;
 class ClassMemberAccessOnInstantiationSniff extends SniffAbstract
 {
     private $classMemberAccessOnInstantiation;
-    private $tokens;
 
     public function enterSniff()
     {
         parent::enterSniff();
 
         $this->classMemberAccessOnInstantiation = array();
-
-        $this->tokens = $this->visitor->getTokens();
     }
 
     public function leaveSniff()
