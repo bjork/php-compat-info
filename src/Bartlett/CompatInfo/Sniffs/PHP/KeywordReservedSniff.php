@@ -108,7 +108,10 @@ class KeywordReservedSniff extends SniffAbstract
         } elseif ($node instanceof Node\Expr\New_
             || $node instanceof Node\Expr\ClassConstFetch
         ) {
-            $name = $node->class->toString();
+            if (!$node->class instanceof Node\Name) {
+                return;
+            }
+            $name = (string) $node->class;
         } else {
             return;
         }
