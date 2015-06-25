@@ -90,6 +90,8 @@ class MigrationOutputFormatter extends OutputFormatter
                 => '%sMagic Method <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
             'AnonymousFunction'
                 => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
+            'NullCoalesceOperator'
+                => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
         );
 
         foreach ($response as $group => $elements) {
@@ -179,6 +181,15 @@ class MigrationOutputFormatter extends OutputFormatter
                     } else {
                         $element = 'Anonymous function';
                     }
+
+                } elseif ('NullCoalesceOperator' == $group) {
+                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
+                        $status = 'info';
+                    } else {
+                        $status = 'error';
+                    }
+                    $label   = 'allowed';
+                    $element = 'Null Coalesce Operator';
 
                 } else {
                     $status = 'error';

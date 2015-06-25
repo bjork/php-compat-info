@@ -1,0 +1,57 @@
+<?php
+
+namespace Bartlett\CompatInfo\Sniffs\PHP;
+
+use Bartlett\Reflect\Sniffer\SniffAbstract;
+
+use PhpParser\Node;
+
+/**
+ * Null Coalesce Operator introduced since PHP 7.0.0 alpha1
+ *
+ * @link https://wiki.php.net/rfc/isset_ternary
+ */
+class NullCoalesceOperatorSniff extends SniffAbstract
+{
+    private $nullCoalesceOperator;
+
+    public function enterSniff()
+    {
+        parent::enterSniff();
+
+        $this->nullCoalesceOperator = array();
+    }
+
+    public function leaveSniff()
+    {
+        parent::leaveSniff();
+
+        if (!empty($this->nullCoalesceOperator)) {
+            // inform analyser that few sniffs were found
+            $this->visitor->setMetrics(
+                array('NullCoalesceOperator' => $this->nullCoalesceOperator)
+            );
+        }
+    }
+
+    public function enterNode(Node $node)
+    {
+        parent::enterNode($node);
+
+        if ($node instanceof Node\Expr\BinaryOp\Coalesce) {
+            $name = '#';
+
+            if (empty($this->nullCoalesceOperator)) {
+                $this->nullCoalesceOperator[$name] = array(
+                    'version' => '7.0.0alpha1',
+                    'spots'   => array()
+                );
+            }
+
+            $this->nullCoalesceOperator[$name]['spots'][] = array(
+                'file'    => realpath($this->visitor->getCurrentFile()),
+                'line'    => $node->getAttribute('startLine', 0)
+            );
+        }
+    }
+}

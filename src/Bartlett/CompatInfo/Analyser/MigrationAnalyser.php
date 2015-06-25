@@ -48,6 +48,7 @@ class MigrationAnalyser extends AbstractSniffAnalyser
             new Sniffs\PHP\ConstSyntaxSniff(),
             new Sniffs\PHP\MagicMethodsSniff(),
             new Sniffs\PHP\AnonymousFunctionSniff(),
+            new Sniffs\PHP\NullCoalesceOperatorSniff(),
         );
     }
 }
