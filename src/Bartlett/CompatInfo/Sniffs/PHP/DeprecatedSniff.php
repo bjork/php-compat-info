@@ -12,10 +12,19 @@ use PDO;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * Deprecated elements such as
+ * - functions
+ * - ini entries
+ * - assignment by reference on object construction
+ *
+ * @link https://github.com/wimg/PHPCompatibility/issues/68 Assignment by reference on object construction
+ */
 class DeprecatedSniff extends SniffAbstract
 {
     private $deprecatedFunctions;
     private $deprecatedDirectives;
+    private $deprecatedAssignRefs;
 
     // database abstraction layer
     private $dbal;
@@ -54,6 +63,7 @@ class DeprecatedSniff extends SniffAbstract
 
         $this->deprecatedFunctions  = array();
         $this->deprecatedDirectives = array();
+        $this->deprecatedAssignRefs = array();
     }
 
     public function leaveSniff()
@@ -70,6 +80,12 @@ class DeprecatedSniff extends SniffAbstract
             // inform analyser that few sniffs were found
             $this->visitor->setMetrics(
                 array('DeprecatedDirectives' => $this->deprecatedDirectives)
+            );
+        }
+        if (!empty($this->deprecatedAssignRefs)) {
+            // inform analyser that few sniffs were found
+            $this->visitor->setMetrics(
+                array('DeprecatedAssignRefs' => $this->deprecatedAssignRefs)
             );
         }
     }
@@ -109,6 +125,22 @@ class DeprecatedSniff extends SniffAbstract
                 'file'    => realpath($this->visitor->getCurrentFile()),
                 'line'    => $node->getAttribute('startLine', 0)
             );
+
+        } elseif ($this->isDeprecatedAssignRef($node)) {
+            $name = 'new';
+
+            if (!isset($this->deprecatedAssignRefs[$name])) {
+                $versions = $this->collection->get($name);
+
+                $this->deprecatedAssignRefs[$name] = array(
+                    'version' => '5.3.0',
+                    'spots'   => array()
+                );
+            }
+            $this->deprecatedAssignRefs[$name]['spots'][] = array(
+                'file'    => realpath($this->visitor->getCurrentFile()),
+                'line'    => $node->getAttribute('startLine', 0)
+            );
         }
     }
 
@@ -127,6 +159,13 @@ class DeprecatedSniff extends SniffAbstract
             && in_array(strtolower((string) $node->name), array('ini_set', 'ini_get'))
             && $node->args[0]->value instanceof Node\Scalar\String_
             && $this->collection->containsKey(strtolower($node->args[0]->value->value))
+        );
+    }
+
+    protected function isDeprecatedAssignRef($node)
+    {
+        return ($node instanceof Node\Expr\AssignRef
+            && $node->expr instanceof Node\Expr\New_
         );
     }
 

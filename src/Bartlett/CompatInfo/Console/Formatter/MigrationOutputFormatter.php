@@ -76,6 +76,8 @@ class MigrationOutputFormatter extends OutputFormatter
                 => '%sFunction <info>%s()</info> is <%s>%s</%s> since <info>%s</info>',
             'DeprecatedDirectives'
                 => '%sIni Entry <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
+            'DeprecatedAssignRefs'
+                => '%sAssignment by reference <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
             'Removed'
                 => '%sFunction <info>%s()</info> is <%s>%s</%s> since <info>%s</info>',
             'ShortOpenTag'
@@ -107,9 +109,13 @@ class MigrationOutputFormatter extends OutputFormatter
                     $status = 'error';
                     $label  = 'reserved';
 
-                } elseif (in_array($group, array('DeprecatedFunctions', 'DeprecatedDirectives'))) {
+                } elseif (in_array($group, array('DeprecatedFunctions', 'DeprecatedDirectives', 'DeprecatedAssignRefs'))) {
                     $status = 'warning';
                     $label  = 'deprecated';
+
+                    if ('new' == $element) {
+                        $element = 'for object construction';
+                    }
 
                 } elseif ('Removed' == $group) {
                     $status = 'error';
