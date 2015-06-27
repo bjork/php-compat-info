@@ -14,7 +14,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class DeprecatedSniff extends SniffAbstract
 {
-    private $deprecated;
+    private $deprecatedFunctions;
+    private $deprecatedDirectives;
 
     // database abstraction layer
     private $dbal;
@@ -51,17 +52,24 @@ class DeprecatedSniff extends SniffAbstract
 
         $this->collection = new ArrayCollection($references);
 
-        $this->deprecated = array();
+        $this->deprecatedFunctions  = array();
+        $this->deprecatedDirectives = array();
     }
 
     public function leaveSniff()
     {
         parent::leaveSniff();
 
-        if (!empty($this->deprecated)) {
+        if (!empty($this->deprecatedFunctions)) {
             // inform analyser that few sniffs were found
             $this->visitor->setMetrics(
-                array('Deprecated' => $this->deprecated)
+                array('DeprecatedFunctions' => $this->deprecatedFunctions)
+            );
+        }
+        if (!empty($this->deprecatedDirectives)) {
+            // inform analyser that few sniffs were found
+            $this->visitor->setMetrics(
+                array('DeprecatedDirectives' => $this->deprecatedDirectives)
             );
         }
     }
@@ -73,15 +81,31 @@ class DeprecatedSniff extends SniffAbstract
         if ($this->isDeprecatedFunc($node)) {
             $name = (string) $node->name;
 
-            if (!isset($this->deprecated[$name])) {
+            if (!isset($this->deprecatedFunctions[$name])) {
                 $versions = $this->collection->get($name);
 
-                $this->deprecated[$name] = array(
+                $this->deprecatedFunctions[$name] = array(
                     'version' => $versions['deprecated'],
                     'spots'   => array()
                 );
             }
-            $this->deprecated[$name]['spots'][] = array(
+            $this->deprecatedFunctions[$name]['spots'][] = array(
+                'file'    => realpath($this->visitor->getCurrentFile()),
+                'line'    => $node->getAttribute('startLine', 0)
+            );
+
+        } elseif ($this->isDeprecatedDirective($node)) {
+            $name = strtolower($node->args[0]->value->value);
+
+            if (!isset($this->deprecatedDirectives[$name])) {
+                $versions = $this->collection->get($name);
+
+                $this->deprecatedDirectives[$name] = array(
+                    'version' => $versions['deprecated'],
+                    'spots'   => array()
+                );
+            }
+            $this->deprecatedDirectives[$name]['spots'][] = array(
                 'file'    => realpath($this->visitor->getCurrentFile()),
                 'line'    => $node->getAttribute('startLine', 0)
             );
@@ -93,6 +117,16 @@ class DeprecatedSniff extends SniffAbstract
         return ($node instanceof Node\Expr\FuncCall
             && $node->name instanceof Node\Name
             && $this->collection->containsKey((string) $node->name)
+        );
+    }
+
+    protected function isDeprecatedDirective($node)
+    {
+        return ($node instanceof Node\Expr\FuncCall
+            && $node->name instanceof Node\Name
+            && in_array(strtolower((string) $node->name), array('ini_set', 'ini_get'))
+            && $node->args[0]->value instanceof Node\Scalar\String_
+            && $this->collection->containsKey(strtolower($node->args[0]->value->value))
         );
     }
 

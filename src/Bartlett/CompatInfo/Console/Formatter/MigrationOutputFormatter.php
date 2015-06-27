@@ -72,8 +72,10 @@ class MigrationOutputFormatter extends OutputFormatter
         $templates = array(
             'KeywordReserved'
                 => '%sKeyword <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
-            'Deprecated'
+            'DeprecatedFunctions'
                 => '%sFunction <info>%s()</info> is <%s>%s</%s> since <info>%s</info>',
+            'DeprecatedDirectives'
+                => '%sIni Entry <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
             'Removed'
                 => '%sFunction <info>%s()</info> is <%s>%s</%s> since <info>%s</info>',
             'ShortOpenTag'
@@ -105,7 +107,7 @@ class MigrationOutputFormatter extends OutputFormatter
                     $status = 'error';
                     $label  = 'reserved';
 
-                } elseif ('Deprecated' == $group) {
+                } elseif (in_array($group, array('DeprecatedFunctions', 'DeprecatedDirectives'))) {
                     $status = 'warning';
                     $label  = 'deprecated';
 
