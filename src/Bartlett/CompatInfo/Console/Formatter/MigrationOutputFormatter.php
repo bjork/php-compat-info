@@ -87,6 +87,7 @@ class MigrationOutputFormatter extends OutputFormatter
             );
 
             foreach ($elements as $element => $values) {
+                // @TODO add a severity info in sniff results returned
                 if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
                     $status = 'info';
                 } else {
