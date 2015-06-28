@@ -48,10 +48,7 @@ class NullCoalesceOperatorSniff extends SniffAbstract
                 );
             }
 
-            $this->nullCoalesceOperator[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->nullCoalesceOperator[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 }

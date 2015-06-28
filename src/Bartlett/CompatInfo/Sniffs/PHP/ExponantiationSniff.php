@@ -50,10 +50,7 @@ class ExponantiationSniff extends SniffAbstract
                 );
             }
 
-            $this->exponantiation[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->exponantiation[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 

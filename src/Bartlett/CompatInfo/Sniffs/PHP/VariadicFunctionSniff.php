@@ -49,10 +49,7 @@ class VariadicFunctionSniff extends SniffAbstract
                 );
             }
 
-            $this->variadicFunction[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->variadicFunction[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 

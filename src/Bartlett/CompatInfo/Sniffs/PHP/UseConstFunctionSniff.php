@@ -49,10 +49,7 @@ class UseConstFunctionSniff extends SniffAbstract
                 );
             }
 
-            $this->useConstFunction[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->useConstFunction[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 

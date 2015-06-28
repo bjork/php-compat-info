@@ -51,10 +51,7 @@ class ConstSyntaxSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->constSyntax[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->constSyntax[$name]['spots'][] = $this->getCurrentSpot($node);
         }
 
         if ($this->isConstantScalarExpression($node)) {
@@ -66,10 +63,7 @@ class ConstSyntaxSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->constSyntax[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->constSyntax[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 

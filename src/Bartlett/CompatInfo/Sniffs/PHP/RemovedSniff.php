@@ -97,10 +97,7 @@ class RemovedSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->removed[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->removed[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 

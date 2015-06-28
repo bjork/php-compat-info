@@ -53,10 +53,7 @@ class AnonymousFunctionSniff extends SniffAbstract
         }
 
         if ($node instanceof Node\Expr\Closure) {
-            $this->anonymousFunction[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->anonymousFunction[$name]['spots'][] = $this->getCurrentSpot($node);
         }
 
         if ($node instanceof Node\Expr\ClassConstFetch
@@ -86,10 +83,7 @@ class AnonymousFunctionSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->anonymousFunction[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->anonymousFunction[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 }

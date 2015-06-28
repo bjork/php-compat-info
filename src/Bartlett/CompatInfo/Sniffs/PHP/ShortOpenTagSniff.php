@@ -51,10 +51,7 @@ class ShortOpenTagSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->shortOpenTag[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->shortOpenTag[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 

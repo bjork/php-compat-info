@@ -52,10 +52,7 @@ class ArrayDereferencingSyntaxSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->arrayDereferencingSyntax[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->arrayDereferencingSyntax[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 }

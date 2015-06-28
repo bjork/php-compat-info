@@ -105,10 +105,7 @@ class DeprecatedSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->deprecatedFunctions[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->deprecatedFunctions[$name]['spots'][] = $this->getCurrentSpot($node);
 
         } elseif ($this->isDeprecatedDirective($node)) {
             $name = strtolower($node->args[0]->value->value);
@@ -121,10 +118,7 @@ class DeprecatedSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->deprecatedDirectives[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->deprecatedDirectives[$name]['spots'][] = $this->getCurrentSpot($node);
 
         } elseif ($this->isDeprecatedAssignRef($node)) {
             $name = 'new';
@@ -137,10 +131,7 @@ class DeprecatedSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->deprecatedAssignRefs[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->deprecatedAssignRefs[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 

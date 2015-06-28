@@ -55,10 +55,7 @@ class ShortArraySyntaxSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->shortArraySyntax[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->shortArraySyntax[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 

@@ -68,10 +68,7 @@ class MagicMethodsSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->magicMethods[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->magicMethods[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 }

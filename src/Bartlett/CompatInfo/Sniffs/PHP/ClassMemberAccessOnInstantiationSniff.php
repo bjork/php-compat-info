@@ -58,10 +58,7 @@ class ClassMemberAccessOnInstantiationSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->classMemberAccessOnInstantiation[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->classMemberAccessOnInstantiation[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 }

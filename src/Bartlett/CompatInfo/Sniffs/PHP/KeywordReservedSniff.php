@@ -125,10 +125,7 @@ class KeywordReservedSniff extends SniffAbstract
                     'spots'   => array()
                 );
             }
-            $this->keywordReserved[$name]['spots'][] = array(
-                'file'    => realpath($this->visitor->getCurrentFile()),
-                'line'    => $node->getAttribute('startLine', 0)
-            );
+            $this->keywordReserved[$name]['spots'][] = $this->getCurrentSpot($node);
         }
     }
 }
