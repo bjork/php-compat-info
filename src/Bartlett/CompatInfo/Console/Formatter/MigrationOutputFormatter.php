@@ -96,6 +96,8 @@ class MigrationOutputFormatter extends OutputFormatter
                 => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
             'NullCoalesceOperator'
                 => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
+            'VariadicFunction'
+                => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
         );
 
         foreach ($response as $group => $elements) {
@@ -198,6 +200,15 @@ class MigrationOutputFormatter extends OutputFormatter
                     }
                     $label   = 'allowed';
                     $element = 'Null Coalesce Operator';
+
+                } elseif ('VariadicFunction' == $group) {
+                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
+                        $status = 'info';
+                    } else {
+                        $status = 'error';
+                    }
+                    $label = 'allowed';
+                    $element = $group;
 
                 } else {
                     $status = 'error';
