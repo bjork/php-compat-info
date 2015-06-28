@@ -170,7 +170,9 @@ class MigrationOutputFormatter extends OutputFormatter
                         $status = 'error';
                     }
                     $label   = 'allowed';
-                    $element = 'Use of CONST keyword outside of a class';
+                    if ('#' == $element) {
+                        $element = 'Use of CONST keyword outside of a class';
+                    }
 
                 } elseif ('MagicMethods' == $group) {
                     if (version_compare(PHP_VERSION, $values['version'], 'ge')) {

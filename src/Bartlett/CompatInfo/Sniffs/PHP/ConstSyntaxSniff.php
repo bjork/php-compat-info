@@ -8,6 +8,7 @@ use PhpParser\Node;
 
 /**
  * Use of CONST keyword outside of a class (since PHP 5.3)
+ * Constant scalar expressions are PHP 5.6 or greater
  *
  * @link https://github.com/wimg/PHPCompatibility/issues/50
  */
@@ -37,11 +38,11 @@ class ConstSyntaxSniff extends SniffAbstract
     {
         parent::enterNode($node);
 
-        if ($node instanceof Node\Stmt\Const_) {
-            if ($this->visitor->inContext('object')) {
-                return;
-            }
+        if (!$node instanceof Node\Stmt\Const_) {
+            return;
+        }
 
+        if (!$this->visitor->inContext('object')) {
             $name = '#';
 
             if (empty($this->constSyntax)) {
@@ -55,5 +56,35 @@ class ConstSyntaxSniff extends SniffAbstract
                 'line'    => $node->getAttribute('startLine', 0)
             );
         }
+
+        if ($this->isConstantScalarExpression($node)) {
+            $name = 'const-scalar-exprs';
+
+            if (!isset($this->constSyntax[$name])) {
+                $this->constSyntax[$name] = array(
+                    'version' => '5.6.0',
+                    'spots'   => array()
+                );
+            }
+            $this->constSyntax[$name]['spots'][] = array(
+                'file'    => realpath($this->visitor->getCurrentFile()),
+                'line'    => $node->getAttribute('startLine', 0)
+            );
+        }
+    }
+
+    /**
+     *
+     * @link https://github.com/llaville/php-compat-info/issues/140
+     * @link http://php.net/manual/en/migration56.new-features.php#migration56.new-features.const-scalar-exprs
+     */
+    protected function isConstantScalarExpression($node)
+    {
+        foreach ($node->consts as $const) {
+            if (!$const->value instanceof Node\Scalar) {
+                return true;
+            }
+        }
+        return false;
     }
 }
