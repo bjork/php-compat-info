@@ -69,39 +69,15 @@ class MigrationOutputFormatter extends OutputFormatter
      */
     protected function printBody(OutputInterface $output, $response)
     {
+        $genericTemplate = '%s%s is <%s>%s</%s> since <info>%s</info>';
+
         $templates = array(
-            'KeywordReserved'
-                => '%sKeyword <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
             'DeprecatedFunctions'
                 => '%sFunction <info>%s()</info> is <%s>%s</%s> since <info>%s</info>',
             'DeprecatedDirectives'
                 => '%sIni Entry <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
-            'DeprecatedAssignRefs'
-                => '%sAssignment by reference <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
-            'Removed'
-                => '%sFunction <info>%s()</info> is <%s>%s</%s> since <info>%s</info>',
-            'ShortOpenTag'
-                => '%s<info>%s</info> syntax is <%s>%s</%s> since <info>%s</info>',
-            'ShortArraySyntax'
-                => '%s<info>%s</info> syntax is <%s>%s</%s> since <info>%s</info>',
-            'ArrayDereferencingSyntax'
-                => '%s<info>%s</info> syntax is <%s>%s</%s> since <info>%s</info>',
-            'ClassMemberAccessOnInstantiation'
-                => '%s<info>%s</info> syntax is <%s>%s</%s> since <info>%s</info>',
-            'ConstSyntax'
-                => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
             'MagicMethods'
-                => '%sMagic Method <info>%s</info> is <%s>%s</%s> since <info>%s</info>',
-            'AnonymousFunction'
-                => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
-            'NullCoalesceOperator'
-                => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
-            'VariadicFunction'
-                => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
-            'UseConstFunction'
-                => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
-            'Exponantiation'
-                => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
+                => '%sMagic Method <info>%s()</info> is <%s>%s</%s> since <info>%s</info>',
         );
 
         foreach ($response as $group => $elements) {
@@ -111,21 +87,28 @@ class MigrationOutputFormatter extends OutputFormatter
             );
 
             foreach ($elements as $element => $values) {
+                if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
+                    $status = 'info';
+                } else {
+                    $status = 'error';
+                }
+
                 if ('KeywordReserved' == $group) {
                     $status = 'error';
                     $label  = 'reserved';
+                    $element = sprintf('Keyword <info>%s</info>', $element);
 
                 } elseif (in_array($group, array('DeprecatedFunctions', 'DeprecatedDirectives', 'DeprecatedAssignRefs'))) {
                     $status = 'warning';
                     $label  = 'deprecated';
-
                     if ('new' == $element) {
-                        $element = 'for object construction';
+                        $element = 'Assignment by reference for object construction';
                     }
 
                 } elseif ('Removed' == $group) {
                     $status = 'error';
                     $label  = 'forbidden';
+                    $element = sprintf('Function <info>%s()</info>', $element);
 
                 } elseif ('ShortOpenTag' == $group) {
                     if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
@@ -134,60 +117,32 @@ class MigrationOutputFormatter extends OutputFormatter
                         $status = 'warning';
                     }
                     $label   = 'always available';
-                    $element = 'Short open tag';
+                    $element = 'Short open tag syntax';
 
                 } elseif ('ShortArraySyntax' == $group) {
-                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
-                        $status = 'info';
-                    } else {
-                        $status = 'error';
-                    }
                     $label   = 'allowed';
-                    $element = 'Short array';
+                    $element = 'Short array syntax';
 
                 } elseif ('ArrayDereferencingSyntax' == $group) {
-                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
-                        $status = 'info';
-                    } else {
-                        $status = 'error';
-                    }
                     $label   = 'allowed';
-                    $element = 'Array dereferencing';
+                    $element = 'Array dereferencing syntax';
 
                 } elseif ('ClassMemberAccessOnInstantiation' == $group) {
-                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
-                        $status = 'info';
-                    } else {
-                        $status = 'error';
-                    }
                     $label   = 'allowed';
-                    $element = 'Class member access on instantiation';
+                    $element = 'Class member access on instantiation syntax';
 
                 } elseif ('ConstSyntax' == $group) {
-                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
-                        $status = 'info';
-                    } else {
-                        $status = 'error';
-                    }
-                    $label   = 'allowed';
+                    $label = 'allowed';
                     if ('#' == $element) {
                         $element = 'Use of CONST keyword outside of a class';
+                    } elseif ('const-scalar-exprs' == $element) {
+                        $element = 'Constant scalar expressions';
                     }
 
                 } elseif ('MagicMethods' == $group) {
-                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
-                        $status = 'info';
-                    } else {
-                        $status = 'error';
-                    }
                     $label = 'available';
 
                 } elseif('AnonymousFunction' == $group) {
-                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
-                        $status = 'info';
-                    } else {
-                        $status = 'error';
-                    }
                     $label = 'allowed';
 
                     if ('this' == $element) {
@@ -199,36 +154,25 @@ class MigrationOutputFormatter extends OutputFormatter
                     }
 
                 } elseif ('NullCoalesceOperator' == $group) {
-                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
-                        $status = 'info';
-                    } else {
-                        $status = 'error';
-                    }
                     $label   = 'allowed';
                     $element = 'Null Coalesce Operator';
 
                 } elseif ('VariadicFunction' == $group) {
-                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
-                        $status = 'info';
-                    } else {
-                        $status = 'error';
-                    }
-                    $label = 'allowed';
-                    $element = $group;
+                    $label   = 'allowed';
+                    $element = 'Variadic Function';
+
+                } elseif ('UseConstFunction' == $group) {
+                    $label   = 'allowed';
+                    $element = 'Use const or use function syntax';
 
                 } else {
-                    if (version_compare(PHP_VERSION, $values['version'], 'ge')) {
-                        $status = 'info';
-                    } else {
-                        $status = 'error';
-                    }
                     $label = 'allowed';
                     $element = $group;
                 }
 
                 $output->writeln(
                     sprintf(
-                        $templates[$group],
+                        isset($templates[$group]) ? $templates[$group] : $genericTemplate,
                         PHP_EOL,
                         $element,
                         $status,
