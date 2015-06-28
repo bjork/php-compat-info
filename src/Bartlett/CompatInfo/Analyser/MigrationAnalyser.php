@@ -50,6 +50,7 @@ class MigrationAnalyser extends AbstractSniffAnalyser
             new Sniffs\PHP\AnonymousFunctionSniff(),
             new Sniffs\PHP\NullCoalesceOperatorSniff(),
             new Sniffs\PHP\VariadicFunctionSniff(),
+            new Sniffs\PHP\UseConstFunctionSniff(),
         );
     }
 }
