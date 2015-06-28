@@ -100,6 +100,8 @@ class MigrationOutputFormatter extends OutputFormatter
                 => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
             'UseConstFunction'
                 => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
+            'Exponantiation'
+                => '%s<info>%s</info> is <%s>%s</%s> since <info>%s</info>',
         );
 
         foreach ($response as $group => $elements) {
