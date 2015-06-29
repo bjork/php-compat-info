@@ -166,6 +166,16 @@ class MigrationOutputFormatter extends OutputFormatter
                     $label   = 'allowed';
                     $element = 'Use const or use function syntax';
 
+                } elseif ('DocStringSyntax' == $group) {
+                    $label = 'allowed';
+                    if ('nowdoc' == $element) {
+                        $element = 'Use of nowdoc syntax';
+                    } elseif ('heredoc-class-props' == $element) {
+                        $element = 'Use of heredoc syntax in class properties';
+                    } else {
+                        $element = 'Use of heredoc syntax';
+                    }
+
                 } else {
                     $label = 'allowed';
                     $element = $group;
