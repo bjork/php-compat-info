@@ -11,6 +11,7 @@ use PhpParser\Node;
  *
  * @link https://github.com/llaville/php-compat-info/issues/141
  * @link http://php.net/manual/en/migration56.new-features.php#migration56.new-features.variadics
+ * @link https://github.com/wimg/PHPCompatibility/issues/58
  */
 class VariadicFunctionSniff extends SniffAbstract
 {
