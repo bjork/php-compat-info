@@ -55,6 +55,7 @@ class MigrationAnalyser extends AbstractSniffAnalyser
             new Sniffs\PHP\DocStringSyntaxSniff(),
             new Sniffs\PHP\ClassExprSyntaxSniff(),
             new Sniffs\PHP\BinaryNumberFormatSniff(),
+            new Sniffs\PHP\CombinedComparisonOperatorSniff(),
         );
     }
 }
