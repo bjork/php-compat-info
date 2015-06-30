@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/llaville/php-reflect.git",
-                "reference": "43944bb9629a09ef174e906af6dfac756b7064da"
+                "reference": "4be20c38f8b11ada5b1ef7ddf549581c7ecd060a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/llaville/php-reflect/zipball/43944bb9629a09ef174e906af6dfac756b7064da",
-                "reference": "43944bb9629a09ef174e906af6dfac756b7064da",
+                "url": "https://api.github.com/repos/llaville/php-reflect/zipball/4be20c38f8b11ada5b1ef7ddf549581c7ecd060a",
+                "reference": "4be20c38f8b11ada5b1ef7ddf549581c7ecd060a",
                 "shasum": ""
             },
             "require": {
@@ -86,7 +86,7 @@
                 "reflection",
                 "reverse-engineer"
             ],
-            "time": "2015-06-22 10:53:48"
+            "time": "2015-06-30 07:05:07"
         },
         {
             "name": "doctrine/collections",
