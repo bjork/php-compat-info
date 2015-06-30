@@ -123,6 +123,9 @@ class KeywordReservedSniff extends SniffAbstract
             || $node instanceof Node\Expr\MethodCall
             || $node instanceof Node\Expr\StaticCall
         ) {
+            if (!$node->name instanceof Node\Name) {
+                return;
+            }
             $name = (string) $node->name;
         } elseif ($node instanceof Node\Stmt\Trait_) {
             $name = 'trait';

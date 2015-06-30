@@ -53,6 +53,7 @@ class MigrationAnalyser extends AbstractSniffAnalyser
             new Sniffs\PHP\UseConstFunctionSniff(),
             new Sniffs\PHP\ExponantiationSniff(),
             new Sniffs\PHP\DocStringSyntaxSniff(),
+            new Sniffs\PHP\ClassExprSyntaxSniff(),
         );
     }
 }
